@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_24 app}
+{xrst_spell
+   cmd
+   dll
+   svec
+}
+
+Changes and Additions to CppAD During 2024
+##########################################
+
+mm-dd
+*****
+
+01-16
+*****
+fix dll linking of jit code by changing *cppad_c_compiler_path* to
+*cppad_c_compiler_cmd* (spaces in the path were making commands fail).
+
+01-12
+*****
+#. There were some problems using the cmake C compiler for the
+   examples and tests of jit compilation, so that has been backed out for now.
+#. There was a mistake in detecting if size_t is the same as
+   :ref:`cmake@cppad_tape_addr_type`. This could cause a compile error
+   in `op_hash_table.hpp` and has been fixed.
+
+01-11
+=====
+Use the *cppad_c_compiler_path* detected by :ref:`cmake-name` 
+to run the C compiler for the Clang and GNU cases; see
+the `create_dll_lib`` defaults for
+:ref:`create_dll_lib@options@compile` and 
+:ref:`create_dll_lib@options@link` .
+
+01-10
+=====
+#. Fix some problems with the install on 32 bit systems.
+   To be specific, the :ref:`thread_alloc-name` memory allocator
+   was not properly aligning doubles.
+#. Suppress the test of the ``svec_setvec`` class.
+   (The class has a bug and is not currently being used.)
+
+01-08
+=====
+On some systems ``unsigned int`` and ``size_t`` are the same type
+and this would cause a compile error in ``vector.hpp`` and
+``vector_bool.hpp`` . This has been fixed.
+
+01-07
+=====
+The forward_two :ref:`forward_two@Syntax` was corrected.
+To be specific, 
+``Forward`` (1, *x2* ) was changed to ``Forward`` (2, *x2* ) .
+In addition, some other minor improvements were made to the
+forward_two documentation page.
+
+01-03
+=====
+
+#. The change on :ref:`whats_new_23@mm-dd@12-24` 2023,
+   when :ref:`cmake@cppad_debug_and_release` was implemented,
+   was not done properly and might cause a mistaken assertion.
+   This has been fixed.
+
+#. Each *file_name* in the latest documentation was moved
+   (this is important if you have links to previous web pages):
+
+   .. list-table::
+
+      *  - Old Location
+         - ``https://cppad.readthedocs.io/``\ *file_name*
+      *  - New Location
+         - ``https://cppad.readthedocs.io/latest/``\ *file_name*
+
+01-02
+=====
+
+#. The :ref:`compare_change.cpp-name` example/test would sometimes fail
+   when :ref:`cmake@cppad_debug_which` was ``debug_even`` or
+   ``debug_odd`` (because it was compiled for debugging and including
+   a release version of a utility). This has been fixed by making this
+   example/test a separate program.
+
+#. The :ref:`CppAD_vector@vectorBool` constructor would generate a
+   warning when called with an ``int`` for the size of the vector
+   (on some compilers). This has been fixed.
+
+
+{xrst_end whats_new_24}
