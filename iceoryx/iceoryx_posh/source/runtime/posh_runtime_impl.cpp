@@ -57,7 +57,9 @@ PoshRuntimeImpl::~PoshRuntimeImpl() noexcept
     sendBuffer << IpcMessageTypeToString(IpcMessageType::TERMINATION) << m_appName;
     IpcMessage receiveBuffer;
 
-    if (m_ipcChannelInterface.sendRequestToRouDi(sendBuffer, receiveBuffer)
+    constexpr uint64_t TERMINATION_TIMEOUT_SECONDS{3U};
+    if (m_ipcChannelInterface.sendRequestToRouDi(
+            sendBuffer, receiveBuffer, units::Duration::fromSeconds(TERMINATION_TIMEOUT_SECONDS))
         && (1U == receiveBuffer.getNumberOfElements()))
     {
         std::string IpcMessage = receiveBuffer.getElementAtIndex(0U);

@@ -38,7 +38,7 @@ mutex::mutex(bool f_isRecursive) noexcept
                           .evaluate()
                           .has_error();
 
-// add by juntuan.lu
+// VLink modification (Apache License 2.0 §4(b)); see packup/patch/iceoryx_2.0.x.NOTICE.md.
 #if !defined(_WIN32) && defined(_POSIX_CLOCK_SELECTION)
 #if _POSIX_CLOCK_SELECTION >= 0
     clockid_t currentClock;

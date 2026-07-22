@@ -344,16 +344,16 @@ bool StatelessWriter::intraprocess_delivery(
         CacheChange_t* change,
         ReaderLocator& reader_locator)
 {
-    RTPSReader* reader = reader_locator.local_reader();
+    LocalReaderPointer::Instance local_reader = reader_locator.local_reader();
 
-    if (reader &&
+    if (local_reader &&
             (!reader_data_filter_ || reader_data_filter_->is_relevant(*change, reader_locator.remote_guid())))
     {
         if (change->write_params.related_sample_identity() != SampleIdentity::unknown())
         {
             change->write_params.sample_identity(change->write_params.related_sample_identity());
         }
-        return reader->processDataMsg(change);
+        return local_reader->processDataMsg(change);
     }
 
     return false;

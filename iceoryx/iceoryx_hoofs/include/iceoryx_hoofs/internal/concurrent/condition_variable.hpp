@@ -1,4 +1,4 @@
-// add by juntuan.lu
+// VLink-authored addition to iceoryx (Apache License 2.0). SPDX-License-Identifier: Apache-2.0. See packup/patch/iceoryx_2.0.x.NOTICE.md.
 
 #pragma once
 

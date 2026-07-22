@@ -29,6 +29,7 @@
 #include <fastdds/dds/log/Log.hpp>
 #include <fastdds/rtps/history/WriterHistory.h>
 #include <fastdds/rtps/participant/RTPSParticipant.h>
+#include <fastdds/rtps/reader/LocalReaderPointer.hpp>
 #include <fastdds/rtps/reader/RTPSReader.h>
 #include <fastdds/rtps/writer/RTPSWriter.h>
 
@@ -768,7 +769,7 @@ RTPSParticipantImpl* RTPSDomainImpl::find_local_participant(
     return nullptr;
 }
 
-RTPSReader* RTPSDomainImpl::find_local_reader(
+std::shared_ptr<LocalReaderPointer> RTPSDomainImpl::find_local_reader(
         const GUID_t& reader_guid)
 {
     auto instance = get_instance();
@@ -782,7 +783,7 @@ RTPSReader* RTPSDomainImpl::find_local_reader(
         }
     }
 
-    return nullptr;
+    return std::shared_ptr<LocalReaderPointer>(nullptr);
 }
 
 RTPSWriter* RTPSDomainImpl::find_local_writer(

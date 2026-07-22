@@ -45,6 +45,7 @@ struct CacheChange_t;
 struct ReaderHistoryState;
 class WriterProxyData;
 class IDataSharingListener;
+struct LocalReaderPointer;
 
 /**
  * Class RTPSReader, manages the reception of data from its matched writers.
@@ -169,6 +170,11 @@ public:
             const GUID_t& writerGUID,
             const SequenceNumber_t& gapStart,
             const SequenceNumberSet_t& gapList) = 0;
+
+    /**
+     * @brief Waits for not being referenced/used by any other entity.
+     */
+    virtual void local_actions_on_reader_removed();
 
     /**
      * Method to indicate the reader that some change has been removed due to HistoryQos requirements.
@@ -471,6 +477,14 @@ protected:
     bool is_datasharing_compatible_with(
             const WriterProxyData& wdata);
 
+    /**
+     * @brief Retrieves the local pointer to this reader
+     * to be used by other local entities.
+     *
+     * @return Local pointer to this reader.
+     */
+    std::shared_ptr<LocalReaderPointer> get_local_pointer();
+
     //!ReaderHistory
     ReaderHistory* mp_history;
     //!Listener
@@ -481,6 +495,10 @@ protected:
     bool m_acceptMessagesFromUnkownWriters;
     //!Trusted writer (for Builtin)
     EntityId_t m_trustedWriterEntityId;
+
+    /// RefCountedPointer of this instance.
+    std::shared_ptr<LocalReaderPointer> local_ptr_;
+
     //!Expects Inline Qos.
     bool m_expectsInlineQos;
 

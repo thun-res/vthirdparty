@@ -281,15 +281,18 @@ else()
 endif()
 
 if(SECURITY AND QNX)
-    add_library(OpenSSL::SSL INTERFACE IMPORTED)
-    add_library(OpenSSL::Crypto INTERFACE IMPORTED)
-
-    set_target_properties(OpenSSL::SSL PROPERTIES
-        INTERFACE_LINK_LIBRARIES ssl
-    )
-    set_target_properties(OpenSSL::Crypto PROPERTIES
-        INTERFACE_LINK_LIBRARIES crypto
-    )
+    if(NOT TARGET OpenSSL::SSL)
+        add_library(OpenSSL::SSL INTERFACE IMPORTED)
+        set_target_properties(OpenSSL::SSL PROPERTIES
+            INTERFACE_LINK_LIBRARIES ssl
+        )
+    endif()
+    if(NOT TARGET OpenSSL::Crypto)
+        add_library(OpenSSL::Crypto INTERFACE IMPORTED)
+        set_target_properties(OpenSSL::Crypto PROPERTIES
+            INTERFACE_LINK_LIBRARIES crypto
+        )
+    endif()
 
     set(OPENSSL_LIBRARIES ssl crypto)
 endif()
